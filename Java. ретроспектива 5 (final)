@@ -1,0 +1,67 @@
+import java.util.*;
+
+public class WordAnalyzer {
+
+    public static void main(String[] args) {
+        String[] words = {"apple", "banana", "orange", "apple", "grape", "banana", "pear", "orange", "kiwi", "apple", "melon", "banana"};
+
+        // Находим уникальные слова и подсчитываем количество их повторений
+        Map<String, Integer> wordCount = new HashMap<>();
+
+        for (String word : words) {
+            if (wordCount.containsKey(word)) {
+                wordCount.put(word, wordCount.get(word) + 1);
+            } else {
+                wordCount.put(word, 1);
+            }
+        }
+
+        // Вывод уникальных слов и их количество повторений
+        System.out.println("Список уникальных слов:");
+        for (String word : wordCount.keySet()) {
+            System.out.println(word + ": " + wordCount.get(word) + " раз(а)");
+        }
+    }
+}
+
+
+
+public class PhoneDirectory {
+    private Map<String, List<String>> directory;
+
+    public PhoneDirectory() {
+        this.directory = new HashMap<>();
+    }
+
+    public void add(String surname, String phoneNumber) {
+        if (directory.containsKey(surname)) {
+            List<String> phoneNumbers = directory.get(surname);
+            phoneNumbers.add(phoneNumber);
+        } else {
+            List<String> phoneNumbers = new ArrayList<>();
+            phoneNumbers.add(phoneNumber);
+            directory.put(surname, phoneNumbers);
+        }
+    }
+
+    public List<String> get(String surname) {
+        return directory.getOrDefault(surname, Collections.emptyList());
+    }
+
+    public static void main(String[] args) {
+        PhoneDirectory phoneDirectory = new PhoneDirectory();
+
+        // Добавляем записи в телефонный справочник
+        phoneDirectory.add("Иванов", "+123456789");
+        phoneDirectory.add("Петров", "+987654321");
+        phoneDirectory.add("Иванов", "+111222333");
+        phoneDirectory.add("Сидоров", "+555666777");
+        phoneDirectory.add("Иванов", "+999000111");
+
+        // Получаем номера телефонов по фамилиям
+        System.out.println("Номера телефонов для Иванова: " + phoneDirectory.get("Иванов"));
+        System.out.println("Номера телефонов для Петрова: " + phoneDirectory.get("Петров"));
+        System.out.println("Номера телефонов для Сидорова: " + phoneDirectory.get("Сидоров"));
+        System.out.println("Номера телефонов для Новикова: " + phoneDirectory.get("Новиков"));
+    }
+}
